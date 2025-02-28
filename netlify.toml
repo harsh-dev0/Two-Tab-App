@@ -1,2 +1,8 @@
 [build]
-  command = "rustup default stable && npm run build"
+  command = """
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  export PATH="$HOME/.cargo/bin:$PATH"
+  rustup default stable
+  cargo install wasm-pack
+  npm run build
+  """

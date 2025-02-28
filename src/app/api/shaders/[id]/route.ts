@@ -3,9 +3,10 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 // Fix: Use { params }: { params: { id: string } } directly
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid shader ID" }, { status: 400 });

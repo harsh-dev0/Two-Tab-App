@@ -2,17 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-// Define Route Context Type
-interface RouteContext {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/shaders/[id] - Get a specific shader
-export async function GET(request: NextRequest, context: RouteContext) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const { id } = context.params; // ✅ Explicitly defined
+    const { id } = params;
 
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid shader ID" }, { status: 400 });

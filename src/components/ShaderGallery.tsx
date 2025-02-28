@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, cache } from "react"
 import {
   Card,
   CardContent,
@@ -43,7 +43,7 @@ export default function ShaderGallery() {
     const fetchShaders = async () => {
       try {
         setIsLoading(true)
-        const response = await fetch("/api/shaders")
+        const response = await fetch("/api/shaders", { cache: "no-store" })
 
         if (!response.ok) {
           throw new Error("Failed to fetch shaders")

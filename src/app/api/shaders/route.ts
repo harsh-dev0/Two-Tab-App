@@ -9,7 +9,9 @@ export async function GET() {
 
     const shaders = await db.collection("shaders").find({}).sort({ createdAt: -1 }).toArray()
 
-    return NextResponse.json(shaders)
+    return NextResponse.json(shaders, {headers: {"Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",}})
   } catch (error) {
     console.error("Error fetching shaders:", error)
     return NextResponse.json({ error: "Failed to fetch shaders" }, { status: 500 })

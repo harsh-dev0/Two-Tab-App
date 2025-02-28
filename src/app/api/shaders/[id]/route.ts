@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-// GET /api/shaders/[id] - Get a specific shader
+// Fix: Use { params }: { params: { id: string } } directly
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;

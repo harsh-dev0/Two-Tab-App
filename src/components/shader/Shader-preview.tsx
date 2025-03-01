@@ -21,8 +21,8 @@ export function ShaderPreview({
 
   return (
     <Card className="bg-gray-800 shadow-xl border-gray-700">
-      <CardContent className="p-6">
-        <div className="aspect-video bg-black rounded-lg h-[300px]">
+      <CardContent className="p-2 sm:p-4 md:p-6">
+        <div className="aspect-video bg-black rounded-lg w-full h-[200px] sm:h-[250px] md:h-[300px]">
           {!isCompileError && (
             <ShaderCanvas
               fragmentShader={shaderCode}
@@ -31,7 +31,7 @@ export function ShaderPreview({
             />
           )}
           {isCompileError && (
-            <div className="w-full h-full flex items-center justify-center bg-red-900/20 text-red-400 p-4 rounded-lg overflow-auto">
+            <div className="w-full h-full flex items-center justify-center bg-red-900/20 text-red-400 p-2 sm:p-4 rounded-lg overflow-auto text-xs sm:text-sm md:text-base">
               <p>Shader compilation failed. See error below.</p>
             </div>
           )}

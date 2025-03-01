@@ -83,7 +83,7 @@ export default function ShaderPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-8 flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen">
         <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
       </div>
     )
@@ -91,82 +91,96 @@ export default function ShaderPage() {
 
   if (error || !shader) {
     return (
-      <div className="container mx-auto p-8">
-        <div className="text-center p-8 bg-red-900/20 rounded-lg border border-red-700">
-          <h3 className="text-xl font-bold text-red-500 mb-2">
-            Error Loading Shader
-          </h3>
-          <p className="text-white mb-4">{error || "Shader not found"}</p>
-          <Link href="/">
-            <Button>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
+      <div className="flex flex-col items-center justify-center h-screen p-4 text-center">
+        <h3 className="text-xl font-bold text-red-500 mb-2">
+          Error Loading Shader
+        </h3>
+        <p className="text-white mb-4">{error || "Shader not found"}</p>
+        <Link href="/">
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Button>
+        </Link>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto p-8 bg-slate-700">
-      <div className="flex justify-between items-center mb-8">
-        <Button
-          variant="outline"
-          className="flex items-center gap-2"
-          onClick={() => window.close()}
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Home
-        </Button>
+    <div className="flex flex-col w-full min-h-screen bg-gray-900 ">
+      {/* Header */}
+      <header className="w-full bg-gray-800 px-6 py-4 border-b border-gray-700 text-center">
+        <h1 className="text-3xl font-bold text-white">Shader Generator</h1>
+        <p className="text-gray-300 mt-1">
+          Generate shaders with AI-powered GLSL
+        </p>
+      </header>
 
-        <Button
-          variant="outline"
-          onClick={shareShader}
-          className="flex items-center gap-2"
-        >
-          <Share className="h-4 w-4" />
-          Share
-        </Button>
-      </div>
+      {/* Content */}
+      <main className="flex-1 container mx-auto p-4 sm:p-8">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() => window.close()}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-          <Card className="bg-gray-800 shadow-xl border-gray-700">
-            <CardHeader>
-              <CardTitle>{shader.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-video bg-black rounded-lg h-[400px]">
-                {shaderParams && (
-                  <ShaderCanvas
-                    fragmentShader={shader.code}
-                    shaderParams={shaderParams}
-                  />
-                )}
-              </div>
-
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold mb-2">Description</h3>
-                <p className="text-gray-300">{shader.description}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <Button
+            variant="outline"
+            onClick={shareShader}
+            className="flex items-center gap-2"
+          >
+            <Share className="h-4 w-4" />
+            Share
+          </Button>
         </div>
 
-        <div>
-          <Card className="bg-gray-800 shadow-xl border-gray-700 mt-6">
-            <CardHeader>
-              <CardTitle>Shader Code</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <pre className="bg-gray-700 rounded-lg p-4 overflow-auto text-xs text-white h-[300px]">
-                <code>{shader.code}</code>
-              </pre>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card className="bg-gray-800 shadow-xl border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-white text-lg sm:text-xl">
+                  {shader.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="aspect-video bg-black rounded-lg w-full h-[250px] sm:h-[350px] md:h-[400px]">
+                  {shaderParams && (
+                    <ShaderCanvas
+                      fragmentShader={shader.code}
+                      shaderParams={shaderParams}
+                    />
+                  )}
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold mb-2 text-white">
+                    Description
+                  </h3>
+                  <p className="text-gray-300 text-sm sm:text-base">
+                    {shader.description}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div>
+            <Card className="bg-gray-800 shadow-xl border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-white">Shader Code</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-gray-700 rounded-lg p-4 overflow-auto text-xs text-white h-[300px] max-w-full">
+                  <code>{shader.code}</code>
+                </pre>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

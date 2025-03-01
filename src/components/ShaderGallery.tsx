@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, cache } from "react"
+import { useState, useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { Share, Star, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import ShaderCanvas from "./ShaderCanvas"
+import { ShaderCanvas } from "./shader/Shader-canvas"
 
 interface ShaderParams {
   speed: number
@@ -86,7 +86,7 @@ export default function ShaderGallery() {
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-900/20 rounded-lg border border-red-700">
+      <div className="text-center p-4 sm:p-8 bg-red-900/20 rounded-lg border border-red-700">
         <h3 className="text-xl font-bold text-red-500 mb-2">
           Error Loading Shaders
         </h3>
@@ -96,17 +96,17 @@ export default function ShaderGallery() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-8 w-full mx-auto px-0">
       <Tabs defaultValue="all">
-        <TabsContent value="all">
+        <TabsContent value="all" className="w-full p-0">
           {shaders.length === 0 ? (
-            <div className="text-center p-8 bg-gray-800 rounded-lg">
+            <div className="text-center p-4 sm:p-8 bg-gray-800 rounded-lg">
               <p className="text-gray-400">
                 No shaders available. Create one!
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
               {shaders.map((shader) => (
                 <ShaderCard
                   key={shader._id}
@@ -131,30 +131,31 @@ function ShaderCard({
   onShare: (id: string) => void
 }) {
   return (
-    <Card className="bg-gray-800 border-gray-700 overflow-hidden">
-      <CardHeader className="p-4 pb-0">
-        <CardTitle className="text-lg flex items-center justify-between">
+    <Card className="bg-gray-800 border-gray-700 overflow-hidden w-full">
+      <CardHeader className="p-3 pb-0 sm:p-4 sm:pb-0">
+        <CardTitle className="text-base sm:text-lg flex items-center justify-between">
           <span className="truncate">{shader.title}</span>
           {shader.featured && (
-            <Star className="h-4 w-4 text-yellow-400 ml-2" />
+            <Star className="h-4 w-4 text-yellow-400 ml-2 flex-shrink-0" />
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4">
-        <div className="aspect-video bg-black rounded-lg h-[180px] mb-2">
+      <CardContent className="p-3 sm:p-4">
+        <div className="aspect-video bg-black rounded-lg w-full h-[120px] xs:h-[140px] sm:h-[160px] md:h-[180px] mb-2">
           <ShaderCanvas
             fragmentShader={shader.code}
             shaderParams={shader.params}
           />
         </div>
-        <p className="text-sm text-gray-400 line-clamp-2">
+        <p className="text-xs sm:text-sm text-gray-400 line-clamp-2">
           {shader.description}
         </p>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between">
+      <CardFooter className="p-3 pt-0 sm:p-4 sm:pt-0 flex justify-between">
         <Button
           variant="outline"
           size="sm"
+          className="text-xs sm:text-sm px-2 sm:px-3 py-1"
           onClick={() => window.open(`/shader/${shader._id}`, "_blank")}
         >
           View
@@ -162,10 +163,10 @@ function ShaderCard({
         <Button
           variant="ghost"
           size="sm"
+          className="flex items-center gap-1 bg-slate-300 text-xs sm:text-sm px-2 sm:px-3 py-1"
           onClick={() => onShare(shader._id)}
-          className="flex items-center gap-1 bg-slate-300"
         >
-          <Share className="h-4 w-4" />
+          <Share className="h-3 w-3 sm:h-4 sm:w-4" />
           Share
         </Button>
       </CardFooter>
